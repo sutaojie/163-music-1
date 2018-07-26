@@ -6,3 +6,16 @@ a{color: inherit; text-decoration: none;}
 ul,ol{list-style: none;}
 
 /*** layout ***/
+.page{
+display: flex;
+height: 100vh;
+}
+.page > .sidebar{
+width: 200px;
+border: 1px solid red;
+
+}
+.page > main{
+flex-grow: 1;
+border:1px solid green;
+}
