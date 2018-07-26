@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>管理员界面</title>
+  <style>
+    *{margin: 0px; padding: 0px;}
+    .container{
+      padding: 50px 80px;
+      border:2px #ddd dashed;
+      border-radius: 40px;
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .pickfiles{
+
+    }
+  </style>
 </head>
 <body>
-  <div id="container">
-  <button id="pickfiles">上传文件</button> 
+  <div id="container" class="container">
+  <span id="pickfiles" class="pickfiles">点击或拖拽文件到这上传</span> 
+  <p>文件大小不能超过 40MB</p>
   </div>
+  <span id="uploadStatus"></span>
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script>
 var APP_ID = 'DVQKSLmMj8bNspwEkLNUL3jH-gzGzoHsz';
@@ -70,6 +88,7 @@ AV.init({
         },
         'UploadProgress': function(up, file) {
                // 每个文件上传时,处理相关的事情
+               uploadStatus.textContent = '文件上传中。。。'
         },
         'FileUploaded': function(up, file, info) {
                // 每个文件上传成功后,处理相关的事情
@@ -83,6 +102,7 @@ AV.init({
                // var domain = up.getOption('domain');
                // var res = parseJSON(info.response);
                // var sourceLink = domain + res.key; 获取上传成功后的文件的Url
+                uploadStatus.textContent = '文件上传完成'
         },
         'Error': function(up, err, errTip) {
                //上传出错时,处理相关的事情
@@ -90,14 +110,7 @@ AV.init({
         'UploadComplete': function() {
                //队列文件处理完毕后,处理相关的事情
         },
-        'Key': function(up, file) {
-            // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-            // 该配置必须要在 unique_names: false , save_key: false 时才生效
-
-            var key = "";
-            // do something with key here
-            return key
-        }
+        
     }
 });
 // domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
