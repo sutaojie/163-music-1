@@ -21,11 +21,38 @@
   </style>
 </head>
 <body>
-  <div id="container" class="container">
-  <span id="pickfiles" class="pickfiles">点击或拖拽文件到这上传</span> 
-  <p>文件大小不能超过 40MB</p>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="newSong">新建歌曲</div>
+      <ul class="songList">
+        <li></li>
+      </ul>
+      <div class="uploadArea">
+          <div id="container" class="container">
+              <span id="pickfiles" class="pickfiles">点击或拖拽文件到这上传</span> 
+              <p>文件大小不能超过 40MB</p>
+            </div>
+              <span id="uploadStatus"></span>
+      </div>
+    </aside>
+    <main>
+      <form>
+        <div class="row">
+          <label>歌名 <input type="text"></label>
+        </div>
+        <div class="row">
+            <label>歌手 <input type="text"></label>
+          </div>
+          <div class="row">
+              <label>外链 <input type="text"></label>
+           </div>
+           <div class="row">
+             <button type="submit">提交</button>
+            </div>
+      </form>
+    </main>
   </div>
-  <span id="uploadStatus"></span>
+  
   <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
   <script>
 var APP_ID = 'DVQKSLmMj8bNspwEkLNUL3jH-gzGzoHsz';
