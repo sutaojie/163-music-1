@@ -1,8 +1,8 @@
 {
-    let view={
-        el:'.page > main',
-        init(){this.$el=$(this.el)},
-        template:`
+    let view = {
+        el: '.page > main',
+        init() { this.$el = $(this.el) },
+        template: `
         <h3>新建歌曲</h3>
         <form class="form">
           <div class="row">
@@ -23,37 +23,53 @@
         </form>
        
         `,
-        render(data = {}){
+        render(data = {}) {
             let placeholders = ['key', 'link']
             let html = this.template
-            placeholders.map((string)=>{
-                html = html.replace(`__${string}__`,data[string]||"")
+            placeholders.map((string) => {
+                html = html.replace(`__${string}__`, data[string] || "")
             })
             $(this.el).html(html)
         }
     }
-    let model = {}
-    let controller= {
-        init(view, model){
+    let model = {
+        data:{
+            name:'',songer:'',url:'',id:''
+        },
+        createSong(data) {
+            var Song = AV.Object.extend('Song');
+            var song = new Song();
+            song.set('name', data.name);
+            song.set('songer', data.songer);
+            song.set('url', data.url)
+            song.save().then( (newSong)=> {
+                console.log(newSong);
+            }, function (error) {
+                console.error(error);
+            });
+        }
+    }
+    let controller = {
+        init(view, model) {
             this.view = view
             this.view.init()
             this.model = model
             this.view.render(this.model.data)
             this.bindEvents()
-            window.eventHub.on('upload', (data)=>{
+            window.eventHub.on('upload', (data) => {
                 this.view.render(data)
             })
         },
-        bindEvents(){
-            this.view.$el.on('submit', 'form', (e)=>{
+        bindEvents() {
+            this.view.$el.on('submit', 'form', (e) => {
                 e.preventDefault()
                 let needs = 'name songer url'.split(' ')
                 let data = {}
-                needs.map((string)=>{
+                needs.map((string) => {
                     data[string] = this.view.$el.find(`[name="${string}"]`).val()
                 })
-                console.log(data);
-                
+                this.model.createSong(data)
+
             })
         }
 
