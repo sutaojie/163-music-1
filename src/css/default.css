@@ -28,6 +28,7 @@ flex-grow: 1;
     padding: 10px;
 }
 .sidebar > .newSong.active{
+    background-color: #d4d4d4;
 }
 #songList{
     flex-grow:1; 

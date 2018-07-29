@@ -14,7 +14,13 @@
             this.view = view
             this.model = model
             this.view.render(this.model.data)
+            window.eventHub.on('upload', (data)=>{ 
+              $(this.view.el).addClass('active') 
+                
+            })
         }
+
+
     }
     controller.init(view, model)
 }

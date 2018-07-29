@@ -27,6 +27,7 @@
             this.model = model
             this.view.render(this.model.data)
             this.initQiniu()
+            
         },
         initQiniu() {
             var uploader = Qiniu.uploader({
@@ -90,8 +91,10 @@
                         var domain = up.getOption('domain');
                         var response = JSON.parse(info.response);
                         var sourceLink = 'http://' + domain + '/' + encodeURIComponent(response.key); //获取上传成功后的文件的Url
-                        console.log(sourceLink);
-
+                        window.eventHub.emit('upload', {
+                            link: sourceLink,
+                            key: response.key
+                        })
                         uploadStatus.textContent = response.key + '文件上传完成'
                     },
                     'Error': function (up, err, errTip) {
