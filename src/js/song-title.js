@@ -19,9 +19,15 @@
              this.active()
                 
             })
+            window.eventHub.on('select',(data)=>{
+                this.removeActive()
+            })
         },
         active(){
             $(this.view.el).addClass('active')
+        },
+        removeActive(){
+            $(this.view.el).removeClass('active')
         }
 
 
