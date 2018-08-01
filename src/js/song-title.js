@@ -22,9 +22,11 @@
             window.eventHub.on('select',(data)=>{
                 this.removeActive()
             })
+            $(this.view.el).on('click', this.active.bind(this))
         },
         active(){
             $(this.view.el).addClass('active')
+            window.eventHub.emit('new')
         },
         removeActive(){
             $(this.view.el).removeClass('active')

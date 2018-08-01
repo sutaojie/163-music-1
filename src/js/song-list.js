@@ -49,6 +49,7 @@
             this.model = model
             this.view.render(this.model.data)
             this.bindEvents()
+            this.bindEventHub()
             this.getAllSongs()
            
         },
@@ -79,6 +80,9 @@
             window.eventHub.on('create', (songData) => {
                 this.model.data.songs.push(songData)
                 this.view.render(this.model.data)
+            })
+            window.eventHub.on('new',()=>{
+               this.view.clearActive() 
             })
         }
     }
