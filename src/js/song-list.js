@@ -70,7 +70,7 @@
                        break
                    }
                }
-            window.eventHub.emit('new')
+               if(!songId) window.eventHub.emit('new');
             window.eventHub.emit('select',data)
 
             }) 
