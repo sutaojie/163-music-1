@@ -100,7 +100,6 @@
           })
         this.model.updateSong(data) 
               .then(()=>{
-                alert('更新数据成功')
                 window.eventHub.emit('updata',JSON.parse(JSON.stringify(this.model.data)))
 
               })
