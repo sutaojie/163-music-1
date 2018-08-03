@@ -7,16 +7,22 @@
   <link rel="stylesheet" href="./css/song.css">
 </head>
 <body>
-    <div class="page"> 
+    <div class="page" id="app">
+      <audio src="about:blank"></audio>
+      <!-- <div class="blurImage"></div> -->
       <div class="disc-container">
 			<img class="pointer" src="//s3.music.126.net/m/s/img/needle-ip6.png?be4ebbeb6befadfcae75ce174e7db862 " alt="">
 			<div class="disc">
 				<div class="icon-wrapper">
 					<svg class="icon icon-play">
-						<use xlink:href="#icon-play"></use>
+						<use xlink:href="#icon-play">
+                <svg id="icon-play" viewBox="0 0 1024 1024" width="100%" height="100%"><path d="M188.911053 1009.365516C141.132318 1039.739986 102.4 1018.287929 102.4 962.384311L102.4 61.299546C102.4 4.97807 140.866013-16.225431 188.911053 14.318341L884.999495 456.844079C932.778229 487.218553 933.044534 536.296007 884.999495 566.839778L188.911053 1009.365516Z"></path></svg>
+            </use>
 					</svg>
 					<svg class="icon icon-pause">
-						<use xlink:href="#icon-pause"></use>
+						<use xlink:href="#icon-pause">
+                <svg id="icon-pause" viewBox="0 0 1024 1024" width="100%" height="100%"><path d="M136.160611 959.070198 410.789389 959.070198 410.789389 64.341401 136.160611 64.341401 136.160611 959.070198zM611.651093 64.341401l0 894.728798L886.278847 959.070198 886.278847 64.341401 611.651093 64.341401z"></path></svg>
+            </use>
 					</svg>
 				</div>
 				<img class="ring" src="//s3.music.126.net/m/s/img/disc-ip6.png?69796123ad7cfe95781ea38aac8f2d48" alt="">
@@ -38,7 +44,7 @@
 		</div>
 
     </div>
-    <div id="app"></div>
+    
    <script src="./js/admin/event-hub.js"></script>
    <script src="../node_modules/leancloud-storage/dist/av-min.js"></script>
    <script src="./js/initialize/AV.js"></script>
