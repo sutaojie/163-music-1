@@ -15,7 +15,14 @@
             let { songs, selectSongId } = data
             let liList = songs.map((song) => {
                 let $li = $('<li></li>').text(song.name).attr('data-song-id', song.id)
-                if(song.id === selectSongId) $li.addClass('active')
+                if(song.id === selectSongId && selectSongId !== undefined) {
+                    console.log('sID');
+                    
+                    console.log(selectSongId);
+                    
+                    
+                    $li.addClass('active')
+                }
                 return $li
             })
             $el.find('ul').empty()
