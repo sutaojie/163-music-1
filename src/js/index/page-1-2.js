@@ -1,31 +1,34 @@
 {
   let view = {
     el: "#songs",
+    template:`
+    <li>
+    <h3>{{song.name}}</h3>
+    <p>
+      <svg class="icon icon-sq">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
+      </svg>
+      {{song.songer}}
+    </p>
+    <a class="playButton" href="./song.html?id={{song.id}}">
+      <svg class="icon icon-play">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
+      </svg>
+    </a>
+  </li>
+    `,
     init() {
       this.$el = $(this.el);
     },
     render(data) {
       let { songs } = data;
-      console.log(songs);
-
       songs.map(song => {
-        let $li = $(`
-                <li>
-              <h3>${song.name}</h3>
-              <p>
-                <svg class="icon icon-sq">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sq"></use>
-                </svg>
-                ${song.songer}
-              </p>
-              <a class="playButton" href="./song.html?id=${song.id}">
-                <svg class="icon icon-play">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use>
-                </svg>
-              </a>
-            </li>
-                `);
-                this.$el.append($li)
+          
+        let $li = $(this.template
+            .replace('{{song.name}}', song.name)
+            .replace('{{song.songer}}', song.songer)
+            .replace('{{song.id}}', song.id))
+         this.$el.append($li)
       });
     }
   };
