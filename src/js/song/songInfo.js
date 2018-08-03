@@ -64,8 +64,8 @@
           let h1 = allP.eq(i).offset().top
           let h2 = this.$el.find('.lyric > .lines ').offset().top
           let height = h1 - h2
-          allP.eq(i).css('color', '#fff')
-          this.$el.find('.lyric > .lines').css('transform', `translateY(${-height}px)`)
+          allP.eq(i).addClass('active').siblings().removeClass('active')
+          this.$el.find('.lyric > .lines').css('transform', `translateY(${-(height-25)}px)`)
           break;
           
         }
