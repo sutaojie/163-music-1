@@ -6,7 +6,7 @@
     },
     render(data) {
       let { song, status, loadlyricStatus } = data;
-      this.$el.css("background-image", `url(${song.cover})`);
+      this.$el.find('.blurImage').css("background-image", `url(${song.cover})`);
       this.$el .find("img.cover") .attr("src", song.cover);
       this.$el.find('.song-description > h1').text(song.name)
       if ( this.$el.find("audio").attr("src") !== song.url) {
@@ -64,7 +64,7 @@
           let h1 = allP.eq(i).offset().top
           let h2 = this.$el.find('.lyric > .lines ').offset().top
           let height = h1 - h2
-          allP.eq(i).css('color', 'red')
+          allP.eq(i).css('color', '#fff')
           this.$el.find('.lyric > .lines').css('transform', `translateY(${-height}px)`)
           break;
           
