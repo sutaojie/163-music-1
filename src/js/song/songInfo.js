@@ -7,29 +7,23 @@
       $(this.el)
         .find("img.cover")
         .attr("src", song.cover);
-      if (
-        $(this.el)
-          .find("audio")
-          .attr("src") !== song.url
-      ) {
-        $(this.el)
-          .find("audio")
-          .attr("src", song.url);
+      if ( $(this.el).find("audio").attr("src") !== song.url) {
+        $(this.el) .find("audio") .attr("src", song.url);
+          let audio = $(this.el).find("audio")[0]
+          audio.onended = ()=>{ 
+            $(this.el) .find(".disc-container") .removeClass("playing");
+          }
+
       }
       if (status === "playing") {
-        $(this.el)
-          .find(".disc-container")
-          .addClass("playing");
+        $(this.el) .find(".disc-container") .addClass("playing")
+          
       } else {
-        $(this.el)
-          .find(".disc-container")
-          .removeClass("playing");
+        $(this.el) .find(".disc-container") .removeClass("playing");
       }
     },
     play() {
-      $(this.el)
-        .find("audio")[0]
-        .play();
+      $(this.el) .find("audio")[0] .play();
     },
     pause() {
       $(this.el)
