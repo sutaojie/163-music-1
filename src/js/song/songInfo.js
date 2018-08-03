@@ -5,7 +5,7 @@
       this.$el = $(this.el)
     },
     render(data) {
-      let { song, status } = data;
+      let { song, status, loadlyricStatus } = data;
       this.$el.css("background-image", `url(${song.cover})`);
       this.$el .find("img.cover") .attr("src", song.cover);
       this.$el.find('.song-description > h1').text(song.name)
@@ -15,6 +15,10 @@
           audio.onended = ()=>{ 
             this.$el .find(".disc-container") .removeClass("playing");
           }
+          audio.ontimeupdate = ()=>{
+             this.showLyric(audio.currentTime)
+                    
+          }
 
       }
       if (status === "playing") {
@@ -23,14 +27,49 @@
       } else {
         this.$el .find(".disc-container") .removeClass("playing");
       }
-      let {lyrics} = song;
+     let {lyrics} = song 
+      if(loadlyricStatus){
+        this.loadLyric(lyrics)
+      }
+      
+    },
+    loadLyric(lyric){
+      let lyrics = lyric;
+      let regex = /\[([\d:|\d.]+)\](.+)/
       let array = lyrics.split('\n').map((string)=>{
         let p = document.createElement('p')
-        p.textContent = string
-        this.$el.find('.lyric > .lines').append(p)  
-        return p
-      })
+        let match = string.match(regex)
+        if(match){
+          p.textContent = match[2]
+          let time = match[1].split(':')
+          let minutes = time[0]
+          let secondes = time[1]
+          let newTime = parseFloat(minutes,10)*60 + parseFloat(secondes,10)
+          p.setAttribute('data-time', newTime)
+        }else{
+          p.textContent = string
+        }
       
+        this.$el.find('.lyric > .lines').append(p)  
+      })
+    },
+    showLyric(lyricTime){
+      
+      let allP = this.$el.find('.lyric > .lines > p')
+      
+      for(let i =0; i<allP.length-1; i++){
+        let currentTime = allP.eq(i).attr('data-time')
+        let nextTime = allP.eq(i+1).attr('data-time')
+        if(currentTime < lyricTime && lyricTime < nextTime){
+          let h1 = allP.eq(i).offset().top
+          let h2 = this.$el.find('.lyric > .lines ').offset().top
+          let height = h1 - h2
+          allP.eq(i).css('color', 'red')
+          this.$el.find('.lyric > .lines').css('transform', `translateY(${-height}px)`)
+          break;
+          
+        }
+      }
       
     },
     play() {
@@ -51,7 +90,8 @@
         url: "",
         cover: ""
       },
-      status: "paused"
+      status: "paused",
+      loadlyricStatus: 'loading'
     },
     get(id) {
       var query = new AV.Query("Song");
@@ -82,6 +122,7 @@
           this.view.pause();
         } else {
           this.model.data.status = "playing";
+          this.model.data.loadlyricStatus = '';
           this.view.render(this.model.data);
           this.view.play();
         }
