@@ -2,7 +2,7 @@
     let view = {
         el:'#app',
         template:`
-        <audio autoplay src="{{url}}"></audio> 
+        <audio autoplay controls src="{{url}}"></audio> 
         `,
         render(data){
             $(this.el).html(this.template.replace('{{url}}', data.url))
