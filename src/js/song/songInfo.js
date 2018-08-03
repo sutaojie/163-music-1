@@ -2,8 +2,11 @@
     let view = {
         el:'#app',
         template:`
-            
-        `
+        <audio autoplay src="{{url}}"></audio> 
+        `,
+        render(data){
+            $(this.el).html(this.template.replace('{{url}}', data.url))
+        }
     } 
     let model = {
         data:{
@@ -32,7 +35,7 @@
             this.model = model
             let id = this.getSongId()
             this.model.get(id).then(()=>{
-                console.log(this.model.data);
+                this.view.render(this.model.data)
                 
             })           
         },
