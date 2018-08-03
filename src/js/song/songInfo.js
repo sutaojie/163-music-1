@@ -1,32 +1,35 @@
 {
   let view = {
     el: "#app",
+    init(){
+      this.$el = $(this.el)
+    },
     render(data) {
       let { song, status } = data;
-      $(this.el).css("background-image", `url(${song.cover})`);
-      $(this.el)
+      this.$el.css("background-image", `url(${song.cover})`);
+      this.$el
         .find("img.cover")
         .attr("src", song.cover);
-      if ( $(this.el).find("audio").attr("src") !== song.url) {
-        $(this.el) .find("audio") .attr("src", song.url);
-          let audio = $(this.el).find("audio")[0]
+      if ( this.$el.find("audio").attr("src") !== song.url) {
+        this.$el .find("audio") .attr("src", song.url);
+          let audio = this.$el.find("audio").get(0)
           audio.onended = ()=>{ 
-            $(this.el) .find(".disc-container") .removeClass("playing");
+            this.$el .find(".disc-container") .removeClass("playing");
           }
 
       }
       if (status === "playing") {
-        $(this.el) .find(".disc-container") .addClass("playing")
+        this.$el .find(".disc-container") .addClass("playing")
           
       } else {
-        $(this.el) .find(".disc-container") .removeClass("playing");
+        this.$el .find(".disc-container") .removeClass("playing");
       }
     },
     play() {
-      $(this.el) .find("audio")[0] .play();
+      this.$el .find("audio")[0] .play();
     },
     pause() {
-      $(this.el)
+      this.$el
         .find("audio")[0]
         .pause();
     }
@@ -56,6 +59,7 @@
     init(view, model) {
       this.view = view;
       this.model = model;
+      this.view.init()
       let id = this.getSongId();
       this.model.get(id).then(() => {
         this.view.render(this.model.data);
