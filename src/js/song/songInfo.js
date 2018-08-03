@@ -1,8 +1,29 @@
 {
     let view = {
-
+        el:'#app',
+        template:`
+            
+        `
     } 
     let model = {
+        data:{
+            id:'',
+            name:'',
+            songe:'',
+            url:'',
+        },
+        get(id){
+            var query = new AV.Query('Song');
+            return query.get(id).then((song)=> {
+                // return {id:song.id, ...song.attributes}  
+                
+                Object.assign(this.data, song.attributes)
+                return song
+            }, function (error) {
+                console.log(error);
+                
+            });
+        }
         
     }
     let controller = {
@@ -10,8 +31,10 @@
             this.view = view
             this.model = model
             let id = this.getSongId()
-            console.log(id);
-            
+            this.model.get(id).then(()=>{
+                console.log(this.model.data);
+                
+            })           
         },
         getSongId(){
             let search = window.location.search;
@@ -34,10 +57,5 @@
         }
     }
     controller.init(view, model)
-
-
-
-
-  
   
 }
