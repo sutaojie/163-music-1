@@ -7,9 +7,8 @@
     render(data) {
       let { song, status } = data;
       this.$el.css("background-image", `url(${song.cover})`);
-      this.$el
-        .find("img.cover")
-        .attr("src", song.cover);
+      this.$el .find("img.cover") .attr("src", song.cover);
+      this.$el.find('.song-description > h1').text(song.name)
       if ( this.$el.find("audio").attr("src") !== song.url) {
         this.$el .find("audio") .attr("src", song.url);
           let audio = this.$el.find("audio").get(0)
@@ -24,6 +23,15 @@
       } else {
         this.$el .find(".disc-container") .removeClass("playing");
       }
+      let {lyrics} = song;
+      let array = lyrics.split('\n').map((string)=>{
+        let p = document.createElement('p')
+        p.textContent = string
+        this.$el.find('.lyric > .lines').append(p)  
+        return p
+      })
+      
+      
     },
     play() {
       this.$el .find("audio")[0] .play();
